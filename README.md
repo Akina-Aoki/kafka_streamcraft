@@ -4,8 +4,8 @@ A learning repository focused on building and understanding real-time data pipel
 
 This repo is a **hands-on Kafka learning workspace**. The goal is to help start from zero and gradually practice:
 
-- ![Running Kafka with docker compose](https://quix.io/docs/quix-streams/tutorials/index.html#running-kafka-locally)
-- Producing and consuming messages
+- [Running Kafka with docker compose](https://quix.io/docs/quix-streams/tutorials/index.html#running-kafka-locally)
+- [Producing and consuming messages](https://github.com/Akina-Aoki/data_platform_course/tree/main/08_producer_consumer)
 - Understanding topics, partitions, offsets, and consumer groups
 - Building simple streaming extendable workflows
 
@@ -19,10 +19,11 @@ If you only have the GitHub repo right now, start by setting up your machine.
 
 1. **Git** (to clone and manage your repository)
 2. **Docker Desktop** (recommended, easiest way to run Kafka)
+3. Python version 3.12.0. [Download if not yet available](https://www.python.org/downloads/release/python-3120/)
 
 ### References
-- ![Kafka Setup by Kokchun](https://www.youtube.com/watch?v=pqRebLFbmwI)
-- ![Github Kafka Setup](https://github.com/Akina-Aoki/data_platform_course/tree/main/07_kafka_setup)
+- [Kafka Setup by Kokchun](https://www.youtube.com/watch?v=pqRebLFbmwI)
+- [Github Kafka Setup](https://github.com/Akina-Aoki/data_platform_course/tree/main/07_kafka_setup)
 
 
 ---
@@ -46,15 +47,10 @@ You should see `origin` pointing to your GitHub repo.
 
 ---
 
-
-## Python dependencies for coding exercises
-
-Since you'll use Python, set up a virtual environment and install Kafka client packages.
-
-### Create and activate virtual environment
+## Create and activate Python 3.12 virtual environment
 **For first time creating the venv
 ```bash
-python -m venv .venv
+py -3.12 -m venv .venv
 ```
 
 Activate:
@@ -65,13 +61,28 @@ source .venv/Scripts/activate
 Sanity Check if venv is active:
 ```bash
 which python
+python --version
 python -c "import sys; print(sys.prefix)
 ```
 
-Expected:
+Expected just for this environement:
 ```bash
 kafka_streamcraft\.venv
+Python 3.12.10
 ```
 
---- 
+CTRL + SHIFT + P → Select Interpreter. Choose
+```bash
+.venv (3.12.x)
+```
+
+### Install requirements
+```bash
+uv pip install quixstreams
+```
+
+Generate requirements after successfull install:
+```bash
+pip freeze > requirements.txt
+``` 
 
