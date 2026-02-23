@@ -4,7 +4,7 @@ A learning repository focused on building and understanding real-time data pipel
 
 This repo is a **hands-on Kafka learning workspace**. The goal is to help start from zero and gradually practice:
 
-- Running Kafka locally
+- ![Running Kafka with docker compose](https://quix.io/docs/quix-streams/tutorials/index.html#running-kafka-locally)
 - Producing and consuming messages
 - Understanding topics, partitions, offsets, and consumer groups
 - Building simple streaming extendable workflows
@@ -44,23 +44,6 @@ You should see `origin` pointing to your GitHub repo.
 
 ---
 
-## Create a local project structure
-
-From inside `kafka_streamcraft`, create folders for cleaner learning:
-
-```bash
-mkdir -p docker notes labs scripts
-```
-
-Suggested purpose:
-
-- `docker/` → Kafka + tools setup files
-- `labs/` → your exercises
-- `notes/` → what you learn each day
-- `scripts/` → helper commands (topic creation, test data, etc.)
-
----
-
 
 ## Python dependencies for coding exercises
 
@@ -69,7 +52,7 @@ Since you'll use Python, set up a virtual environment and install Kafka client p
 ### Create and activate virtual environment
 
 Install Python 3.10+ and then run:
-
+wh
 ```bash
 python -m venv .venv
 source .venv/Scripts/activate
@@ -86,25 +69,7 @@ Expected:
 kafka_streamcraft\.venv
 ```
 
-## Requirements
-In `requirements.txt`
-```bash
-confluent-kafka==2.4.0
-kafka-python==2.0.2
-pydantic==2.7.4
-python-dotenv==1.0.1
-```
 
-Install dependencies:
-```bash
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-pip list
-```
-
-Expected:
-````bash
-```
 
 ### Optional (helpful for experiments)
 
