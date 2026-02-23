@@ -1,11 +1,4 @@
-# Kafka producer and consumer
-
-For this part, I have used quixstreams (Also done in README initial setup)
-```bash
-uv pip install quixstreams
-```
-
-py -3.12 -m venv .venv
+# Workflow: Producer and Consumer
 
 **part 1 - theory about producer and consumer**
 
