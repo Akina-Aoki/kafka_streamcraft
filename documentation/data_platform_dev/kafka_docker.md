@@ -5,7 +5,7 @@
 
 Then run:
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml up -d
 ```
 
 Expected:
@@ -20,7 +20,7 @@ Expected:
 Check logs:
 ```bash
 docker ps
-docker logs -f kafka
+docker logs -f broker
 ```
 
 Check broker:
@@ -46,5 +46,5 @@ http://localhost:9021/clusters
 ---
 ## CLosing Docker (inside a Docker folder)
 ```bash
-docker compose -f docker/docker-compose.yml down -v
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml down -v
 ```
