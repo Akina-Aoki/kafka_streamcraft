@@ -66,3 +66,4 @@ IMPORTANT. Dont forget to close the docker container so the port won't collide. 
 ```
 docker compose -p crash_course_nana -f docker/crash_course_nana/docker-compose.yml down -v
 ```
+
