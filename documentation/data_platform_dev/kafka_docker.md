@@ -41,7 +41,7 @@ Expected services in this project:
 ## 3) Confirm startup status
 
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+docker compose -f docker/data_platform_dev/docker-compose.yml up -d
 ```
 
 If you see `Created` on dependent services, wait a few seconds and run `up -d` again.
@@ -56,25 +56,24 @@ docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.y
 
 ```bash
 docker ps
-docker logs -f kafka
-```
-
-Check broker:
-```bash
-docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml exec broker bash
 ```
 
 Inside broker container:
-
+Check broker:
 ```bash
-kafka-topics --list --bootstrap-server localhost:9092
+docker compose -p data_platform_dev \
+  -f docker/data_platform_dev/docker-compose.yml \
+  exec broker kafka-topics --list --bootstrap-server broker:9092
 ```
+
+
+
 
 Exit shell with `Ctrl + D`.
 
 ---
 
-## 6) Open Control Center
+## 5) Open Control Center
 
 ```bash
 http://localhost:9021/clusters
@@ -82,7 +81,7 @@ http://localhost:9021/clusters
 
 ---
 
-## 7) Stop and cleanup stack
+## 6) Stop and cleanup stack
 
 ```bash
 docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml down -v
