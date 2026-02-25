@@ -26,6 +26,7 @@ If you only have the GitHub repo right now, start by setting up your machine.
 - [Kafka Setup by Kokchun](https://www.youtube.com/watch?v=pqRebLFbmwI)
 - [Github Kafka Setup](https://github.com/Akina-Aoki/data_platform_course/tree/main/07_kafka_setup)
 - [Kafka vs RabbitMQ](https://www.youtube.com/watch?v=tnYP7_gWSSg&pp=ugUEEgJlbg%3D%3D)
+- [Kafka Crash Course - Hands on Project](https://www.youtube.com/watch?v=B7CwU_tNYIE)
 
 
 ---
