@@ -1,50 +1,126 @@
-# KAFKA Docker compose
-## Start Kafka locally with Docker Compose
+# Kafka Docker Compose (data_platform_dev)
 
-![Create `docker/docker-compose.yml` with this](https://quix.io/docs/quix-streams/tutorials/docker-compose.yml)
+This is the updated command workflow after moving the compose file to:
 
-Then run:
+- `docker/data_platform_dev/docker-compose.yml`
+
+And after removing fixed `container_name` values.
+
+---
+
+## 1) Pre-flight checks
+
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+# from repository root
+pwd
+
+# validate compose file
+docker compose -f docker/data_platform_dev/docker-compose.yml config
+
+# optional: check host ports used by this stack
+ss -ltn '( sport = :9092 or sport = :9101 or sport = :8081 or sport = :9021 )'
 ```
 
-Expected:
+If these ports are already occupied, stop the conflicting stack first.
+
+---
+
+## 2) Start Kafka stack
+
 ```bash
-[+] Running 4/4
- ✔ Network docker_default     
- ✔ Container broker           
- ✔ Container schema-registry  
- ✔ Container control-center   Started   
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml up -d
 ```
 
-Check logs:
+Expected services in this project:
+- `broker`
+- `schema-registry`
+- `control-center`
+
+---
+
+## 3) Confirm startup status
+
 ```bash
-docker ps
-docker logs -f kafka
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml ps -a
 ```
 
-Check broker:
+If you see `Created` on dependent services, wait a few seconds and run `up -d` again.
+
 ```bash
-docker exec -it broker bash
-# Expected: [appuser@broker ~]$ 
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml up -d
 ```
 
-Check logs inside broker:
+---
+
+## 4) Read logs
+
+```bash
+# broker logs
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml logs --tail=200 broker
+
+# dependent services logs
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml logs --tail=200 schema-registry control-center
+```
+
+---
+
+## 5) Open shell inside broker container
+
+> Use `docker compose exec` (recommended), not `docker exec -it broker`, because container names are now auto-generated.
+
+```bash
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml exec broker bash
+```
+
+Inside broker container:
+
 ```bash
 kafka-topics --list --bootstrap-server localhost:9092
-
-# Expected: Several Internal Kafka Topics
 ```
 
-To exit press `Ctrl + D`.
+Exit shell with `Ctrl + D`.
 
-#### Open Confluent cluster localhost
+---
+
+## 6) Open Control Center
+
 ```bash
 http://localhost:9021/clusters
 ```
 
 ---
-## CLosing Docker (inside a Docker folder)
+
+## 7) Stop and cleanup stack
+
 ```bash
-docker compose -f docker/docker-compose.yml down -v
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml down -v
 ```
+
+---
+
+## Troubleshooting
+
+### A) `container name "/broker" is already in use`
+
+That came from old fixed-name containers. If you still have leftovers:
+
+```bash
+docker ps -a --filter name='^/broker$'
+docker ps -a --filter name='^/schema-registry$'
+docker ps -a --filter name='^/control-center$'
+
+docker rm -f broker schema-registry control-center
+```
+
+### B) One service is `Up`, others are only `Created`
+
+This usually means dependencies are still initializing. Check logs and retry:
+
+```bash
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml logs --tail=200 broker
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml up -d
+```
+
+### C) Strange command like `[200~docker ...`
+
+That is a terminal paste artifact (bracketed paste mode), not a Docker error. Re-type command once cleanly.

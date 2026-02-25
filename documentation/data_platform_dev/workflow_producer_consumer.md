@@ -1,50 +1,69 @@
-# Workflow: Producer and Consumer
+# Producer and consumer workflow
 
-**part 1 - theory about producer and consumer**
+## Producer and consumer overview
 
-<a href="https://youtu.be/u5hU0KTvNnc" target="_blank">
 <img src="https://github.com/kokchun/assets/blob/main/data_platform/producer_consumer_theory.png?raw=true" alt="kafka producer consumer" width="600">
-</a>
 
-**part 2 - coding producer and consumer**
+After you run producer and consumer:
 
-<a href="https://youtu.be/cPO_NjMBecc" target="_blank">
 <img src="https://github.com/kokchun/assets/blob/main/data_platform/producer_consumer.png?raw=true" alt="kafka producer consumer" width="600">
-</a>
 
+---
 
-## Consume data from topic in broker 
-
-To consume the data in the broker, start with opening up the container interactively with 
+## 0) Start Kafka stack first
 
 ```bash
-docker exec -it broker /bin/bash
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml up -d
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml ps
 ```
 
-Then run 
+---
+
+## 1) Consume data from topic in broker
+
+Open broker container shell (new workflow):
 
 ```bash
-kafka-console-consumer --bootstrap-server localhost:9092 --topic <topic_name> --from-beginning 
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml exec broker bash
 ```
 
-To read messages with keys and timestamp
+Then run consumer command:
+
+```bash
+kafka-console-consumer --bootstrap-server localhost:9092 --topic <topic_name> --from-beginning
+```
+
+Example:
 
 ```bash
 kafka-console-consumer --bootstrap-server localhost:9092 --topic jokes --from-beginning --property print.key=true --property print.timestamp=true
 ```
 
-You can also go into the control center `localhost:9021` to check the topics and its events can be consumed from there.
+---
 
+## 2) Run Python producer/consumer app
 
+From repository root:
 
-## Other videos 📹
+```bash
+source .venv/Scripts/activate  # Git Bash on Windows
+python src/data_platform_dev/producer.py
+python src/data_platform_dev/consumer.py
+```
 
-- [streaming dataframe - QuixStreams [2024]](https://www.youtube.com/watch?v=NSDChuaHK0k)
+---
 
-## Read more 👓
+## 3) Useful checks
 
+```bash
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml logs --tail=200 broker
+docker compose -p data_platform_dev -f docker/data_platform_dev/docker-compose.yml logs --tail=200 schema-registry control-center
+```
+
+---
+
+## Resources
 - [kafka fundamentals - conduktor kafkacademy](https://learn.conduktor.io/kafka/kafka-fundamentals/)
 - [kafka topics - conduktor kafkacademy](https://learn.conduktor.io/kafka/kafka-topics/)
 - [kafka producers - conduktor kafkacademy](https://learn.conduktor.io/kafka/kafka-producers/)
 - [kafka consumers - conduktor kafkacademy](https://learn.conduktor.io/kafka/kafka-consumers/)
-- [Sources - quix docs](https://quix.io/docs/quix-streams/connectors/sources/index.html#standalone-sources)
