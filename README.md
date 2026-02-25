@@ -7,7 +7,8 @@ This repo is a **hands-on Kafka learning workspace**. The goal is to help start 
 - [Running Kafka with docker compose](https://quix.io/docs/quix-streams/tutorials/index.html#running-kafka-locally)
 - [Producing and consuming messages](https://github.com/Akina-Aoki/data_platform_course/tree/main/08_producer_consumer)
 - Understanding topics, partitions, offsets, and consumer groups
-- Building simple streaming extendable workflows
+- Building simple streaming extendable workflows with [Youtube Tutorial](https://www.bing.com/videos/riverview/relatedvideo?q=kafka%20tutorial%20youtube&mid=B36049CF29A5414B8641B36049CF29A5414B8641&ajaxhist=0)
+
 
 ---
 
@@ -24,6 +25,7 @@ If you only have the GitHub repo right now, start by setting up your machine.
 ### References
 - [Kafka Setup by Kokchun](https://www.youtube.com/watch?v=pqRebLFbmwI)
 - [Github Kafka Setup](https://github.com/Akina-Aoki/data_platform_course/tree/main/07_kafka_setup)
+- [Kafka vs RabbitMQ](https://www.youtube.com/watch?v=tnYP7_gWSSg&pp=ugUEEgJlbg%3D%3D)
 
 
 ---
